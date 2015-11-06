@@ -23,7 +23,10 @@ var Core;
 	};
 	
 	requirejs(_cache([
+		'/lib/core.js',
+		'/lib/bootstrap.js',
 		'/lib/Jquery-2.1.4.js',
+		'/lib/angular/angular.js',
 		'/content/js/bootstrap.js'
 	]), function(util) {
 		$.Bootstrap('fuck this', _cache({
@@ -37,7 +40,11 @@ var Core;
 		]), function(app) {
 			
 			app.Load(_cache([
-				'/content/build/app.min.js'
+				'/app/controller/articles.js',
+				'/app/controller/article.js',
+				'/app/controller/edit.js',
+				'/app/controller/home.js',
+				'/app/directive/nav.js'
 			]), function() {
 				app.Config(['$routeProvider', function($routeProvider) {
 					$routeProvider.
@@ -60,8 +67,7 @@ var Core;
 						otherwise({
 							redirectTo: '/home'
 						});		
-				}]).run(['$cookies', '$rootScope', '$location', '$timeout', 'service.translate', function($cookies, $rootScope, $location, $timeout, translate) {
-					$rootScope.translate = translate;
+				}]).run(['$cookies', '$rootScope', '$location', '$timeout', function($cookies, $rootScope, $location, $timeout) {
 					app.loaded().then(function() {
 						$.console.info('app loaded');
 						$.jQuery('.loadingBlock').css({'pointer-events': 'none', 'opacity': 0});

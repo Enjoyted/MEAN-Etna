@@ -91,7 +91,13 @@ var Core, isset;
 			}
 		},
 	});
-	$.console = new _log($.Config.console)
+	$.console = new _log({
+		log: true,
+		debug: true,
+		error: true,
+		info: true,
+		warn: true
+	})
 	/*----------------- Log -------------------*/
 
 	
