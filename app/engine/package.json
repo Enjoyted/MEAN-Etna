@@ -5,7 +5,7 @@
 		"mongodb": "latest",
 		"tar": "latest",
 		"unzip": "latest",
-		"express": "latest",
+		"express": "~4.0.0",
 		"passportjs": "latest"
 	}
 }
