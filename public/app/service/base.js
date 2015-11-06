@@ -1,4 +1,4 @@
-Core.add(function($) {
+/*Core.add(function(base) {
 	"use strict";
 
 	return (function(app) {
@@ -11,3 +11,4 @@ Core.add(function($) {
 		}]);
 	});
 });
+*/
