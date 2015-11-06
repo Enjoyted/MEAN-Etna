@@ -1,4 +1,4 @@
-Core.add(function($) {
+Core.add(function(base) {
 	"use strict";
 
 	return (function(app) {
@@ -6,7 +6,7 @@ Core.add(function($) {
 			
 			_this = {
 				restrict: 'E',
-				templateUrl: '/public/app/partials/nav.html',
+				templateUrl: '/app/partials/nav.html',
 				link: function(scope, element, attrs) {
 					scope.tab = {
 						list: tabs
