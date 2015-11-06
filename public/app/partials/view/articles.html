@@ -1,0 +1,71 @@
+<div class="col-md-12 jinxloadPage" ng-cloak>
+	<div class="page-header text-center">
+		<h1>Les Articles</h1>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-heading pointer" ng-click="display = !display">
+			<h3 class="panel-title">Ajouter un article</h3>
+		</div>
+		<div ng-show="display" class="panel-body">
+			<form role="form">
+				<div class="form-group">
+					<label for="nom">Nom de l'article:</label>
+					<input type="text" id="nom" class="form-control" required="true" ng-model="article.nom">
+				</div>
+				<div class="form-group">
+					<label for="introduction">Introduction:</label>
+					<textarea id="introduction" class="form-control" required="true" ng-model="article.introduction"></textarea>
+				</div>
+				<div class="form-group">
+					<label for="description">Description:</label>
+					<textarea id="description" class="form-control" required="true" ng-model="article.description"></textarea>
+				</div>
+				<div class="form-group">
+					<label for="tags">Tags (séparé par des virgules):</label>
+					<input type="text" id="tags" class="form-control" required="true" ng-model="article.tags">
+				</div>
+				<div class="form-group">
+					<label for="image">Liens vers l'image:</label>
+					<input type="text" id="image" class="form-control" required="true" ng-model="article.image">
+				</div>
+				<div class="form-group">
+					<label for="pseudo">Pseudo:</label>
+					<input type="text" id="pseudo" class="form-control" required="true" ng-model="article.pseudo">
+				</div>
+				<div class="form-group">
+					<label for="email">Email:</label>
+					<input type="email" id="email" class="form-control" required="true" ng-model="article.email">
+				</div>
+				<div class="text-center">
+					<a class="btn btn-success" ng-click="submit()">Envoyer</a>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="input-group">
+		<span class="input-group-addon">Search</span>
+		<input type="text" class="form-control" ng-model="search">
+		<div class="input-group-btn">
+			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sort by <span class="caret"></span></button>
+			<ul class="dropdown-menu dropdown-menu-right">
+				<li class="pointer"><a ng-click="sort('date', 'desc')"><i ng-show="mode == 'dateDesc'" class="fa fa-check"></i> Date <i class="fa fa-sort-desc"></i></a></li>
+				<li class="pointer"><a ng-click="sort('date', 'asc')"><i ng-show="mode == 'dateAsc'" class="fa fa-check"></i> Date <i class="fa fa-sort-asc"></i></a></li>
+				<li role="separator" class="divider"></li>
+				<li class="pointer"><a ng-click="sort('note', 'desc')"><i ng-show="mode == 'noteDesc'" class="fa fa-check"></i> Note <i class="fa fa-sort-desc"></i></a></li>
+				<li class="pointer"><a ng-click="sort('note', 'asc')"><i ng-show="mode == 'noteAsc'" class="fa fa-check"></i> Note <i class="fa fa-sort-asc"></i></a></li>
+				<li role="separator" class="divider"></li>
+				<li class="pointer"><a ng-click="sort('popularity', 'desc')"><i ng-show="mode == 'popularityDesc'" class="fa fa-check"></i> Popularity <i class="fa fa-sort-desc"></i></a></li>
+				<li class="pointer"><a ng-click="sort('popularity', 'asc')"><i ng-show="mode == 'popularityAsc'" class="fa fa-check"></i> Popularity <i class="fa fa-sort-asc"></i></a></li>
+			</ul>
+		</div>
+	</div>
+	<br>
+	<div ng-repeat="article in data | filter:search" ng-show="article.status == 1" class="list-group pointer">
+		<a href="#/article/{{article.id}}" class="list-group-item">
+			<span class="badge">{{article.note}} / 5 ( {{article.popularity}} comments )</span>
+			<h4 class="list-group-item-heading">{{article.nom}}</h4>
+			<p class="list-group-item-text">{{article.introduction}}</p>
+			<span class="badge pull-right">{{article.date}}</span>
+		</a>
+	</div>
+<div>

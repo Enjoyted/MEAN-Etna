@@ -1,0 +1,76 @@
+<div class="col-md-12 jinxloadPage" ng-cloak>
+	<div class="page-header text-center">
+		<h1>{{data.article.nom}}</h1>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">
+				<div class="form-group">
+					<label for="nom">Nom de l'article:</label>
+					<input type="text" id="nom" class="form-control" required="true" ng-model="data.article.nom">
+				</div>
+			</h3>
+		</div>
+		<div class="panel-body">
+			<div class="thumbnail">
+				<img ng-src="{{data.article.image}}">
+			</div>
+			<div class="form-group">
+				<label for="image">Liens vers l'image:</label>
+				<input type="text" id="image" class="form-control" required="true" ng-model="data.article.image">
+			</div>
+			<div class="form-group">
+				<label for="introduction">Introduction:</label>
+				<textarea id="introduction" class="form-control" required="true" ng-model="data.article.introduction"></textarea>
+			</div>
+			<div class="form-group">
+				<label for="description">Description:</label>
+				<textarea id="description" class="form-control" required="true" ng-model="data.article.description"></textarea>
+			</div>
+			<div class="form-group">
+				<label for="tags">Tags (séparé par des virgules):</label>
+				<input type="text" id="tags" class="form-control" required="true" ng-model="data.article.tags">
+			</div>
+		</div>
+		<div class="panel-footer">
+			<div class="form-group">
+				<label for="pseudo">Pseudo:</label>
+				<input type="text" id="pseudo" class="form-control" required="true" ng-model="data.article.pseudo">
+			</div>
+			<span class="badge pull-right">{{data.article.date}}</span>
+		</div>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-heading pointer" ng-click="display = !display">
+			<h3 class="panel-title">Afficher les commentaires</h3>
+		</div>
+		<div ng-show="display" class="panel-body">
+			<div ng-repeat="commentaire in data.article.commentaires" ng-show="commentaire.status == 1" class="panel panel-default">
+				<div class="panel-heading">
+					<span class="badge pull-right">{{commentaire.note}} / 5</span>
+					<h3 class="panel-title">
+						<div class="form-group">
+							<label for="pseudo">Pseudo:</label>
+							<input type="text" class="form-control" required="true" ng-model="commentaire.pseudo">
+						</div>
+					</h3>
+				</div>
+				<div class="panel-body">
+					<div class="form-group">
+						<label for="message">Message:</label>
+						<textarea id="message" class="form-control" required="true" ng-model="commentaire.message"></textarea>
+					</div>
+				</div>
+				<div class="panel-footer">
+					<span class="badge pull-right">{{commentaire.date}}</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="text-center" style="margin-bottom: 25px;">
+		<button class="btn btn-success" ng-click="submit()">Sauvegarder</button>
+		<button class="btn btn-success" ng-show="data.article.status == 0" ng-click="active()">Activer</button>
+		<button class="btn btn-warning" ng-show="data.article.status == 1" ng-click="deactive()">Désactiver</button>
+		<button class="btn btn-danger" ng-click="delete()">Supprimer</button>
+	</div>
+<div>

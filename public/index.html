@@ -1,21 +1,34 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" ng-app="Mean">
 	<head>
 		<meta charset="utf-8">
-		<title>App</title>
-		
+		<title>MEAN-Etna</title>
+		<script type="text/javascript" src="/lib/angular/angular.js"></script>
+		<script type="text/javascript" src="/lib/angular/angular-route.js"></script>
+		<script type="text/javascript" src="/lib/angular/angular-cookies.js"></script>
+		<script type="text/javascript" src="/lib/jquery-2.1.4.js"></script>
 		<script type="text/javascript" src="/lib/require.js"></script>
-		<script type="text/javascript" src="/app/main.js"></script>
+	
+		<link rel="stylesheet" href="/public/style/css/bootstrap.css" />
+		<link rel="stylesheet" href="/public/style/css/font-awesome.css" />
+		<link rel="stylesheet" href="/public/style/css/app.css" />
+		<script type="text/javascript" src="/public/style/js/bootstrap.js"></script>
 	</head>
 	<body>
-		<div class="loadingBlock transitionAll">
-			<div class="loadingInner">Loading <i class="loading fa fa-cog fa-2x"></i></div>
-		</div>
-		<div style="height:100%;">
-			<jinx-menu></jinx-menu>
-			<div class="jinxView">
-				<div style="height:100%;" ng-view></div>
+		<div class="container">
+			<jinx-nav></jinx-nav>
+			<div class="jinxView" ng-cloak>
+				<div ng-view></div>
 			</div>
+			<jinx-footer></jinx-footer>
 		</div>
+
+		<script type="text/javascript" src="/public/app/main.js"></script>
+		<script type="text/javascript" src="/public/app/directive/nav.js"></script>
+		<script type="text/javascript" src="/public/app/service/base.js"></script>
+		<script type="text/javascript" src="/public/app/controller/home.js"></script>
+		<script type="text/javascript" src="/public/app/controller/articles.js"></script>
+		<script type="text/javascript" src="/public/app/controller/article.js"></script>
+		<script type="text/javascript" src="/public/app/controller/edit.js"></script>
 	</body>
 </html>

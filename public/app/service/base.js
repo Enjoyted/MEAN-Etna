@@ -1,7 +1,13 @@
 Core.add(function($) {
 	"use strict";
-	
-	app.Service('base', function() {
-		return ({});
+
+	return (function(app) {
+		app.Service('Base', ['$scope', '$rootScope', '$http', '$filter', '$timeout',  function($scope, $rootScope, $http, $filter, $timeout) {
+			
+			_this = {
+				
+			};
+			return _this;
+		}]);
 	});
 });

@@ -1,0 +1,21 @@
+<nav class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-mean-navbar-collapse" aria-expanded="false">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#/home">MEAN-Etna</a>
+		</div>
+
+		<div class="collapse navbar-collapse" id="bs-mean-navbar-collapse">
+			<ul class="nav navbar-nav">
+				<li ng-repeat="(key, value) in tab.list">
+					<a href="#{{value.url}}"><i class="{{value.icon}}"></i> {{value.name}}</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</nav>
