@@ -49,7 +49,7 @@ crashlytics.properties
 crashlytics-build.properties
 
 
-
+/app/config.js
 /app/engine/node_modules/*
 /app/engine/node_modules/
 /app/engine/mongodb/*
