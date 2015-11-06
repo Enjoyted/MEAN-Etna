@@ -18,8 +18,8 @@ var Core;
 
 	var partials = '/app/partials/';
 
-	$.connection = function($http, c, a, p) {
-		return $http({method: 'post', url: '/', data: {c: (isset(c)) ? c : 'home', a: (isset(a)) ? a : 'index', p: (isset(p)) ? p : ''}});
+	$.connection = function($http, method, url, data) {
+		return $http({method: (method ? method : 'post'), url: (url ? url : '/'), data: (data ? data : {})});
 	};
 	
 	requirejs(_cache([

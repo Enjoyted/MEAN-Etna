@@ -16,22 +16,18 @@ Core.add(function(base) {
 				if ($scope.commentaire.pseudo != '' && $scope.commentaire.message != '') {
 					var data = $scope.commentaire;
 					data.id_article = $routeParams.id;
-					base.connection($http, 'commentaires', 'save', {commentaire: data}).then(function(response) {
-						if (response.data.state == 1) {
+					base.connection($http, 'post', '/rest/comment/', data).then(function(response) {
+						if (response.data.result.ok == 1) {
 							document.location.reload(true);
 						}
 					});
 				}
 			};
 
-			base.connection($http, 'articles', 'get', $routeParams).then(function(response) {
-				$scope.data = response.data.data;
-				$scope.data.article = response.data.data[0];
-				if (response.data.state == 1 && parseInt(response.data.data[0].status) == 1) {
-					$scope.format();
-				} else {
-					document.location.replace('#/articles');
-				}
+			base.connection($http, 'get', '/rest/article/' + $routeParams).then(function(response) {
+				$scope.data = response.data;
+				$scope.data.article = response.data[0];
+				$scope.format();
 			});
 
 			$scope.format = function() {

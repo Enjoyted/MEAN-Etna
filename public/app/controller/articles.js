@@ -26,19 +26,17 @@ Core.add(function(base) {
 					$scope.article.image != '' && 
 					$scope.article.pseudo != '' && 
 					$scope.article.email != '') {
-					base.connection($http, 'articles', 'save', {article: $scope.article}).then(function(response) {
-						if (response.data.state == 1) {
-							document.location.assign('#/article/' + response.data.data.id);
+					base.connection($http, 'post', '/rest/article/', $scope.article).then(function(response) {
+						if (response.data.result.ok == 1) {
+							document.location.assign('#/article/' + response.data.inserted[0]._id);
 						}
 					});
 				}
 			};
 
-			base.connection($http, 'articles', 'getList').then(function(response) {
-				$scope.data = response.data.data;
-				if (response.data.state == 1) {
-					$scope.format();
-				}
+			base.connection($http, 'get', '/rest/article/').then(function(response) {
+				$scope.data = response.data;
+				$scope.format();
 			});
 
 			$scope.format = function() {

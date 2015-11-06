@@ -20,8 +20,8 @@ Core.add(function(base) {
 					$scope.data.article.image != '' && 
 					$scope.data.article.pseudo != '' && 
 					$scope.data.article.email != '') {
-					base.connection($http, 'articles', 'update', {article: $scope.data.article}).then(function(response) {
-						if (response.data.state == 1) {
+					base.connection($http, 'put', '/rest/article/' + $scope.data.article.id, $scope.data.article).then(function(response) {
+						if (response.data.result.ok == 1) {
 							document.location.reload(true);
 						}
 					});
@@ -39,21 +39,17 @@ Core.add(function(base) {
 			};
 
 			$scope.delete = function() {
-				base.connection($http, 'articles', 'delete', {id: $scope.data.article.id}).then(function(response) {
-					if (response.data.state == 1) {
+				base.connection($http, 'delete', '/rest/article/' + $scope.data.article.id).then(function(response) {
+					if (response.data.result.ok == 1) {
 						document.location.replace('#/articles');
 					}
 				});
 			};
 
-			base.connection($http, 'articles', 'get', $routeParams).then(function(response) {
-				$scope.data = response.data.data;
-				$scope.data.article = response.data.data[0];
-				if (response.data.state == 1) {
-					$scope.format();
-				} else {
-					document.location.replace('#/articles');
-				}
+			base.connection($http, 'get', '/rest/article/' + $routeParams.id).then(function(response) {
+				$scope.data = response.data;
+				$scope.data.article = response.data[0];
+				$scope.format();
 			});
 
 			$scope.format = function() {
