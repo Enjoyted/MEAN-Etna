@@ -5,6 +5,8 @@ var express = $.module('/engine/node_modules/express');
 var obj = function(callback) {
 	this._config = $.config.get('http');
 	this.app = express();
+	this.app.use(express.static(appRoot + '/public'));
+	
 	this.server(callback);
 }
 obj.prototype = $.extends('!base', {

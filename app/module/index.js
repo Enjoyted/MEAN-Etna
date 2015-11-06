@@ -8,7 +8,7 @@ var obj = function(app) {
 };
 obj.prototype = $.extends('!base', {
 	index: function(req, res) {
-		res.send('Hello World!');
+		res.sendFile(appRoot + '/public/index.html')
 	}
 });
 module.exports = obj;

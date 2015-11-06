@@ -11,14 +11,14 @@ var Core;
 	// lib to load
 	var _cache = function(array) {
 		for (var i in array) {
-			array[i] = array[i] + '?v=' + $.Config.version;
+			array[i] = array[i] + '?v=' + Math.floor(Math.random() * 10000);
 		}
 		return (array);
 	}
 
 	var partials = '/app/partials/';
 
-	base.connection = function($http, c, a, p) {
+	$.connection = function($http, c, a, p) {
 		return $http({method: 'post', url: '/', data: {c: (isset(c)) ? c : 'home', a: (isset(a)) ? a : 'index', p: (isset(p)) ? p : ''}});
 	};
 	
@@ -26,7 +26,7 @@ var Core;
 		'/lib/Jquery-2.1.4.js',
 		'/content/js/bootstrap.js'
 	]), function(util) {
-		$.Bootstrap($.Config.appName, _cache({
+		$.Bootstrap('fuck this', _cache({
 			ngRoute: '/lib/angular/angular-route.min.js',
 			ngCookies: '/lib/angular/angular-cookies.min.js',
 			ngAnimate: '/lib/angular/angular-animate.min.js',
