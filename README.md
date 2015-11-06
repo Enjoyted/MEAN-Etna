@@ -5,4 +5,3 @@ workers :
 Ryan Anzer,
 Yalap Thomas,
 Teddy Isidor
-ok
