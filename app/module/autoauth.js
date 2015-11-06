@@ -13,7 +13,7 @@ var FacebookStrategy = $.module('/engine/node_modules/passport-facebook').Strate
 passport.use(new FacebookStrategy({
         clientID: FACEBOOK_APP_ID,
         clientSecret: FACEBOOK_APP_SECRET,
-        callbackURL: "/#/home"
+        callbackURL: "/"
     },
     function(accessToken, refreshToken, profile, done) {
         User.findOrCreate(profile, function(err, user) {
@@ -35,7 +35,7 @@ var obj = function(app) {
     // authentication has failed.
     app.get(this._path + '/callback',
         passport.authenticate('facebook', {
-            successRedirect: '/home',
+            successRedirect: '/',
             failureRedirect: '/login'
             }
         )
