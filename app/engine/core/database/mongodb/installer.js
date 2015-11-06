@@ -6,12 +6,16 @@ var obj = {
 	url: {
 		win32: {
 			url: 'http://downloads.mongodb.org/win32/mongodb-win32-x86_64-v3.0-latest.zip?_ga=1.112981572.1551922970.1433319278',
-			name: 'mongodb-win32-x86_64-v3.0-latest.zip',
+			name: 'mongodb-win32-x86_64-v3.0-latest.zip'
 		},
 		linux: {
 			url: 'http://downloads.mongodb.org/linux/mongodb-linux-i686-latest.tgz?_ga=1.117084614.1551922970.1433319278',
-			name: 'mongodb-linux-x86_64-3.0.4.tgz',
-		}
+			name: 'mongodb-linux-x86_64-3.0.4.tgz'
+		},
+        darwin: {
+            url: 'http://www.mongodb.org/dr/fastdl.mongodb.org/osx/mongodb-osx-x86_64-3.0.7.tgz/download',
+            name: 'mongodb-osx-x86_64-3.0.7.tgz'
+        }
 	},
 	isReady: function() {
 		return ($.file.exists($.file.Path.DB + 'mongodb/binary/'));
@@ -34,7 +38,7 @@ var obj = {
 	},
 	install: function() {
 		var self = this, p = new $.promise();
-		if (isset(self.url[os.platform()])) {
+		if ($.defined(self.url[os.platform()])) {
 			var base = self.url[os.platform()];
 			
 			$.file.exists($.file.Path.CACHE + base.name).then(function() {

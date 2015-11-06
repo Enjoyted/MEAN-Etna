@@ -52,7 +52,7 @@ obj.prototype = {
 	},
 	start: function() {
 		var self = this, p = new $.promise(), loaded = false;
-		this.child = spawn(self._path + '/mongod', ['--storageEngine=mmapv1', '--dbpath', $.file.Path.CACHE + 'db']);	
+		this.child = spawn(self._path + '/mongod', ['--storageEngine=mmapv1', '--dbpath', $.file.Path.CACHE + 'db']);
 		this.child.stdout.on('data', function (data) {
 			$.log.add('info', 'mongodb output ' + data);
 			if (!loaded) {
@@ -62,9 +62,8 @@ obj.prototype = {
 				setTimeout(function() { p.resolve(); }, 1000);
 			} 
 		});
-		this.child.stderr.on('data', function (data) {
-			$.console.error().white('mongod :').red('error in mongod ', err).print();
-			$.log.add('error', 'error in mongod ', err);
+		this.child.stderr.on('data', function (err) {
+			$.log.add('error', 'error in mongod ', err.toString());
 		});
 		
 		this.child.on('exit', function(code, signal) {

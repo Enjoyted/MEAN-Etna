@@ -78,3 +78,4 @@ app/engine/core/database/**/binary/*
 app/engine/core/database/**/binary/
 .idea/*
 */.DS_Store
+**/.DS_Store
