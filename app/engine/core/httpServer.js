@@ -1,11 +1,13 @@
 "use strict";
 
-var express = $.module('/engine/node_modules/express');
+var express = $.module('/engine/node_modules/express'), bodyParser = $.module('/engine/node_modules/body-parser');
 
 var obj = function(callback) {
 	this._config = $.config.get('http');
 	this.app = express();
 	this.app.use(express.static(appRoot + '/public'));
+	this.app.use(bodyParser.urlencoded({ extended: false }));
+    this.app.use(bodyParser.json());
 	
 	this.server(callback);
 }

@@ -6,6 +6,7 @@
 		"tar": "latest",
 		"unzip": "latest",
 		"express": "~4.0.0",
+		"body-parser": "latest",
 		"passport": "latest"
 	}
 }
