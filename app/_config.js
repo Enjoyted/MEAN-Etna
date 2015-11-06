@@ -39,7 +39,7 @@ module.exports = {
 	http: {
 		gZip: false, // caches static pages  
 		run: true,
-		port: 3000,
+		port: 1337,
 		ip: '0.0.0.0',
 		
 		ssl: false,
