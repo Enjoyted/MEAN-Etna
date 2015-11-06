@@ -61,7 +61,7 @@
 	</div>
 	<br>
 	<div ng-repeat="article in data | filter:search" ng-show="article.status == 1" class="list-group pointer">
-		<a href="#/article/{{article.id}}" class="list-group-item">
+		<a href="#/article/{{article._id}}" class="list-group-item">
 			<span class="badge">{{article.note}} / 5 ( {{article.popularity}} comments )</span>
 			<h4 class="list-group-item-heading">{{article.nom}}</h4>
 			<p class="list-group-item-text">{{article.introduction}}</p>

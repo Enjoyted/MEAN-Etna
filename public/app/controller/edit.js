@@ -2,7 +2,7 @@ Core.add(function(base) {
 	"use strict";
 
 	return (function(app) {
-		app.Controller('Edit', ['$scope', '$rootScope', '$http', '$filter', '$timeout',  function($scope, $rootScope, $http, $filter, $timeout) {
+		app.Controller('Edit', ['$scope', '$rootScope', '$routeParams', '$http', '$filter', '$timeout',  function($scope, $rootScope, $routeParams, $http, $filter, $timeout) {
 			
 			$scope.data = {};
 			$scope.display = false;
@@ -20,7 +20,7 @@ Core.add(function(base) {
 					$scope.data.article.image != '' && 
 					$scope.data.article.pseudo != '' && 
 					$scope.data.article.email != '') {
-					base.connection($http, 'put', '/rest/article/' + $scope.data.article.id, $scope.data.article).then(function(response) {
+					base.connection($http, 'put', '/rest/article/' + $scope.data.article._id, $scope.data.article).then(function(response) {
 						if (response.data.result.ok == 1) {
 							document.location.reload(true);
 						}
@@ -39,8 +39,8 @@ Core.add(function(base) {
 			};
 
 			$scope.delete = function() {
-				base.connection($http, 'delete', '/rest/article/' + $scope.data.article.id).then(function(response) {
-					if (response.data.result.ok == 1) {
+				base.connection($http, 'delete', '/rest/article/' + $scope.data.article._id).then(function(response) {
+					if (response.data.ok == 1) {
 						document.location.replace('#/articles');
 					}
 				});
@@ -55,7 +55,7 @@ Core.add(function(base) {
 			$scope.format = function() {
 				var note = 0;
 				$scope.data.article.popularity = 0;
-				$scope.data.articlearticle.date = $filter('date')(new Date($scope.data.article.date), 'EEEE, d MMMM y - HH:mm');
+				$scope.data.article.date = $filter('date')(new Date($scope.data.article.date), 'EEEE, d MMMM y - HH:mm');
 				for (var i in $scope.data.article.commentaires) {
 					note += $scope.data.article.commentaires[i].note;
 					$scope.data.article.popularity++;

@@ -2,7 +2,7 @@ Core.add(function(base) {
 	"use strict";
 
 	return (function(app) {
-		app.Controller('Articles', ['$scope', '$rootScope', '$http', '$filter', '$timeout',  function($scope, $rootScope, $http, $filter, $timeout) {
+		app.Controller('Articles', ['$scope', '$rootScope', '$routeParams', '$http', '$filter', '$timeout',  function($scope, $rootScope, $routeParams, $http, $filter, $timeout) {
 
 			$scope.data = {};
 			$scope.search = '';

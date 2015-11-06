@@ -55,7 +55,9 @@ obj.prototype = $.extends('!module', {
 		parent: '',
         pseudo: '',
 		message: '',
-		note: '3'
+		note: '3',
+		date: new Date().getTime(),
+        status: 1
     },
     _merge: function(data) {
         var copy = {};

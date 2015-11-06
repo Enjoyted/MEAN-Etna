@@ -2,7 +2,7 @@ Core.add(function(base) {
 	"use strict";
 
 	return (function(app) {
-		app.Controller('Article', ['$scope', '$rootScope', '$http', '$filter', '$timeout',  function($scope, $rootScope, $http, $filter, $timeout) {
+		app.Controller('Article', ['$scope', '$rootScope', '$routeParams', '$http', '$filter', '$timeout',  function($scope, $rootScope, $routeParams, $http, $filter, $timeout) {
 		
 			$scope.data = {};	
 			$scope.display = false;
@@ -24,7 +24,7 @@ Core.add(function(base) {
 				}
 			};
 
-			base.connection($http, 'get', '/rest/article/' + $routeParams).then(function(response) {
+			base.connection($http, 'get', '/rest/article/' + $routeParams.id).then(function(response) {
 				$scope.data = response.data;
 				$scope.data.article = response.data[0];
 				$scope.format();
