@@ -8,23 +8,7 @@
 	</head>
 	<body>
     <script>
-        var FACEBOOK_APP_ID = "1666649750283501";
-        var FACEBOOK_APP_SECRET = "b9a9aff20902582a64df6f8c78fea929";
-        var passport = require('passport')
-                , FacebookStrategy = require('passport-facebook').Strategy;
 
-        passport.use(new FacebookStrategy({
-                    clientID: FACEBOOK_APP_ID,
-                    clientSecret: FACEBOOK_APP_SECRET,
-                    callbackURL: "/#/home"
-                },
-                function(accessToken, refreshToken, profile, done) {
-                    User.findOrCreate(..., function(err, user) {
-                        if (err) { return done(err); }
-                        done(null, user);
-                    });
-                }
-        ));
         /*window.fbAsyncInit = function() {
             FB.init({
                 appId      : '1666649750283501',

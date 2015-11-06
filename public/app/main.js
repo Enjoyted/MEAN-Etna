@@ -44,13 +44,9 @@ var Core;
 				'/app/controller/articles.js',
 				'/app/controller/article.js',
 				'/app/controller/edit.js',
-<<<<<<< HEAD
 				'/app/controller/home.js',
 				'/app/directive/nav.js',
-                '/app/controller/login.js'
-=======
-				'/app/controller/home.js'
->>>>>>> e73dd47c8a6b0d4ed24b23a0fa4a34db9cf041f4
+                '/app/controller/login.js',
 			]), function() {
 				app.Config(['$routeProvider', function($routeProvider) {
 					$routeProvider.
