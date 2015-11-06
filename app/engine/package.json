@@ -6,6 +6,6 @@
 		"tar": "latest",
 		"unzip": "latest",
 		"express": "~4.0.0",
-		"passportjs": "latest"
+		"passport": "latest"
 	}
 }
