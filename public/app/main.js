@@ -44,7 +44,9 @@ var Core;
 				'/app/controller/articles.js',
 				'/app/controller/article.js',
 				'/app/controller/edit.js',
-				'/app/controller/home.js'
+				'/app/controller/home.js',
+				'/app/directive/nav.js',
+                '/app/controller/login.js',
 			]), function() {
 				app.Config(['$routeProvider', function($routeProvider) {
 					$routeProvider.
@@ -64,6 +66,10 @@ var Core;
 							templateUrl: partials + 'view/edit.html',
 							controller: 'controller.Edit'
 						}).
+                        when('/login', {
+                            templateUrl: partials + 'view/login.html',
+                            controller: 'controller.Login'
+                        }).
 						otherwise({
 							redirectTo: '/home'
 						});		
