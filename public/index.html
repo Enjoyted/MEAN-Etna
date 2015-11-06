@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>App</title>
+		
+		<script type="text/javascript" src="/lib/require.js"></script>
+		<script type="text/javascript" src="/app/main.js"></script>
+	</head>
+	<body>
+		<div class="loadingBlock transitionAll">
+			<div class="loadingInner">Loading <i class="loading fa fa-cog fa-2x"></i></div>
+		</div>
+		<div style="height:100%;">
+			<jinx-menu></jinx-menu>
+			<div class="jinxView">
+				<div style="height:100%;" ng-view></div>
+			</div>
+		</div>
+	</body>
+</html>

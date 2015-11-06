@@ -1,0 +1,11 @@
+{
+	"name": "MEAN-Etna",
+	"version": "0.0.01",
+	"dependencies": {
+		"mongodb": "latest",
+		"tar": "latest",
+		"unzip": "latest",
+		"express": "latest",
+		"passportjs": "latest"
+	}
+}
