@@ -13,7 +13,7 @@ var FacebookStrategy = $.module('/engine/node_modules/passport-facebook').Strate
 passport.use(new FacebookStrategy({
         clientID: FACEBOOK_APP_ID,
         clientSecret: FACEBOOK_APP_SECRET,
-        callbackURL: "/"
+        callbackURL: "/auth/facebook/callback"
     },
     function(accessToken, refreshToken, profile, done) {
         User.findOrCreate(profile, function(err, user) {
@@ -27,18 +27,22 @@ var obj = function(app) {
     var self = this;
     this._path = '/auth/facebook';
 
-    app.get(this._path, passport.authenticate('facebook'));
+    app.get(this._path, function(err, req, res, next) {
+        console.error(err.stack);
+        passport.authenticate('facebook')(err, req, res, next);
+        return;
+    });
 
     // Facebook will redirect the user to this URL after approval.  Finish the
     // authentication process by attempting to obtain an access token.  If
     // access was granted, the user will be logged in.  Otherwise,
     // authentication has failed.
-    app.get(this._path + '/callback',
-        passport.authenticate('facebook', {
-            successRedirect: '/',
-            failureRedirect: '/login'
-            }
-        )
+    app.get(this._path + '/callback', function(req, res, next) {
+            passport.authenticate('facebook', {
+                successRedirect: '/home',
+                failureRedirect: '/login'
+            })(req, res, next);
+        }
     );
 
     app.get(this._path + '/', function(req, res) {

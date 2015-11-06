@@ -40,13 +40,11 @@ var Core;
 			
 			app.Load(_cache([
 				'/content/js/bootstrap.js',
-				'/app/directive/nav.js',
 				'/app/controller/articles.js',
 				'/app/controller/article.js',
 				'/app/controller/edit.js',
 				'/app/controller/home.js',
-				'/app/directive/nav.js',
-                '/app/controller/login.js',
+                '/app/controller/login.js'
 			]), function() {
 				app.Config(['$routeProvider', function($routeProvider) {
 					$routeProvider.
