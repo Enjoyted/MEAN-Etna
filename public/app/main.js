@@ -27,7 +27,6 @@ var Core;
 		'/lib/bootstrap.js',
 		'/lib/Jquery-2.1.4.js',
 		'/lib/angular/angular.js',
-		'/content/js/bootstrap.js'
 	]), function(util) {
 		$.Bootstrap('fuck this', _cache({
 			ngRoute: '/lib/angular/angular-route.min.js',
@@ -40,12 +39,18 @@ var Core;
 		]), function(app) {
 			
 			app.Load(_cache([
+				'/content/js/bootstrap.js',
+				'/app/directive/nav.js',
 				'/app/controller/articles.js',
 				'/app/controller/article.js',
 				'/app/controller/edit.js',
+<<<<<<< HEAD
 				'/app/controller/home.js',
 				'/app/directive/nav.js',
                 '/app/controller/login.js'
+=======
+				'/app/controller/home.js'
+>>>>>>> e73dd47c8a6b0d4ed24b23a0fa4a34db9cf041f4
 			]), function() {
 				app.Config(['$routeProvider', function($routeProvider) {
 					$routeProvider.
@@ -74,7 +79,7 @@ var Core;
 						});		
 				}]).run(['$cookies', '$rootScope', '$location', '$timeout', function($cookies, $rootScope, $location, $timeout) {
 					app.loaded().then(function() {
-						$.console.info('app loaded');
+						$.console.info('app loaded', app);
 						$.jQuery('.loadingBlock').css({'pointer-events': 'none', 'opacity': 0});
 					});
 				}]);

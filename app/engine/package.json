@@ -6,7 +6,12 @@
 		"tar": "latest",
 		"unzip": "latest",
 		"express": "~4.0.0",
+<<<<<<< HEAD
 		"passport": "latest",
         "passport-facebook": "latest"
+=======
+		"body-parser": "latest",
+		"passport": "latest"
+>>>>>>> e73dd47c8a6b0d4ed24b23a0fa4a34db9cf041f4
 	}
 }

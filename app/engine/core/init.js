@@ -1,6 +1,7 @@
 "use strict";
 
 var database = $.module('/engine/core/database.js'), http = $.module('/engine/core/httpServer.js');
+var mongo = $.module('/engine/core/mongodb.js');
 
 module.exports = {
 	_obm: {},
@@ -22,4 +23,14 @@ module.exports = {
 		
 		return (p);
 	},
+	orm: function() {
+		var orm = new mongo(), p = new $.promise();
+		
+		$.obm.add('orm', orm);
+		orm.connect($.config.get('database.mongodb.ip')).then(function() {
+			p.resolve();
+		});
+		
+		return (p);	
+	}
 };

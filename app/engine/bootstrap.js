@@ -13,6 +13,8 @@ var p = new $.promise();
 base.prototype._obm = $.obm;
 
 init.database().then(function() {
+	return (init.orm());
+}).then(function() {
 	return (init.httpServer());
 }).then(function() {
 	p.resolve();

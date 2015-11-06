@@ -80,7 +80,7 @@ var Core;
 			return (this._controller.controller('controller.' + name, query));
 		},
 		Directive: function(name, query) {
-			return (this._directive.directive('directive.' + name, query));
+			return (this._directive.directive(name, query));
 		},
 		Service: function(name, query) {
 			return (this._service.factory('service.' + name, query));

@@ -6,7 +6,7 @@ var obj = function(app) {
 		self.index(req, res);
 	});
 };
-obj.prototype = $.extends('!base', {
+obj.prototype = $.extends('!module', {
 	index: function(req, res) {
 		res.sendFile(appRoot + '/public/index.html')
 	}
