@@ -2,16 +2,28 @@
 
 var obj = function(app) {
 	var self = this;
-	app.post('/login', function(req, res) {
-		self.login(req.body).then(function(out) {
-            res.json(out);
-        }, function(out) {
+
+    app.post('/login/', function(req, res) {
+        self.login(req.body).then(function (out) {
+            var sKey = this.randomKey(124);
+            self._session[sKey] = {};
+
+            res.cookie('session', sKey, { maxAge: 900000, httpOnly: true });
+            res.json({
+                sessionKey: sKey
+            });
+        }, function (out) {
             res.status(400).json(out);
         });
 	});
-    app.post('/register', function(req, res) {
+    app.post('/register/', function(req, res) {
         self.register(req.body).then(function(out) {
-            res.json(out);
+            var sKey = this.randomKey(124);
+            self._session[sKey] = true;
+
+            res.json({
+                sessionKey: sKey
+            });
         }, function(out) {
             res.status(400).json(out);
         });
@@ -60,7 +72,11 @@ obj.prototype = $.extends('!module', {
             if (res.length > 0 || !$.defined(data.login) || !$.defined(data.password)) {
                 return (new $.promise()).reject('user already has that name');
             }
-            return (self.mongo.insert(this._merge(data)));
+            return (self.mongo.insert(self._merge(data)));
+        }).then(function(res) {
+            p.resolve(res);
+        }, function(res) {
+            p.reject(res);
         });
 
         return (p);
