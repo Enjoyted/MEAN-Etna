@@ -8,9 +8,9 @@ var obj = function(callback) {
 	this.app.use(express.static(appRoot + '/public'));
 	this.app.use(bodyParser.urlencoded({ extended: false }));
     this.app.use(bodyParser.json());
-	
-	this.server(callback);
-}
+
+    this.server(callback);
+};
 obj.prototype = $.extends('!base', {
 	_cache: {},
 	_load: function() {

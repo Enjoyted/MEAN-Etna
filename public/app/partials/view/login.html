@@ -1,5 +1,6 @@
 <div class="col-md-12 jinxloadPage" ng-cloak>
     <script>
+        /*
         // This is called with the results from from FB.getLoginStatus().
         function statusChangeCallback(response) {
             console.log('statusChangeCallback');
@@ -51,8 +52,8 @@
                 /*
                     do stuff on /home/
                 */
-            });
-        }
+           /* });*/
+        /*}*/
     </script>
 
     <a href="/auth/facebook">Login with Facebook</a>
@@ -64,12 +65,15 @@
     <div id="status"></div>
 
     <legend>Login</legend>
-    <form id="loginform">
+    <div>
         <label for="username">Username : </label>
-        <input class="form-control" type="text" id="username" placeholder="Micky112" />
+        <input class="form-control" type="text" ng-model="auth.data.login" placeholder="Micky112" />
 
         <label for="password">Password : </label>
-        <input class="form-control" type="password" id="password" />
-    </form>
+        <input class="form-control" type="password" ng-model="auth.data.password"/>
+		
+		<button ng-click="auth.login()">login</button>
+		<button ng-click="auth.register()">register</button>
+    </div>
 
 </div>
