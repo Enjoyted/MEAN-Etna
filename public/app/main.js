@@ -16,20 +16,29 @@ var Core;
 		return (array);
 	}
 
-	var partials = '/public/app/partials/';
+	var partials = '/app/partials/';
 
 	base.connection = function($http, c, a, p) {
 		return $http({method: 'post', url: '/', data: {c: (isset(c)) ? c : 'home', a: (isset(a)) ? a : 'index', p: (isset(p)) ? p : ''}});
 	};
 	
-	requirejs(_cache(['/content/build/lib.min.js']), function(util) {
+	requirejs(_cache([
+		'/lib/Jquery-2.1.4.js',
+		'/content/js/bootstrap.js'
+	]), function(util) {
 		$.Bootstrap($.Config.appName, _cache({
 			ngRoute: '/lib/angular/angular-route.min.js',
 			ngCookies: '/lib/angular/angular-cookies.min.js',
 			ngAnimate: '/lib/angular/angular-animate.min.js',
-		}), _cache(['/content/build/app.min.css']), function(app) {
+		}), _cache([
+			'/content/css/bootstrap.css',
+			'/content/css/font-awesome.css',
+			'/content/css/app.css'
+		]), function(app) {
 			
-			app.Load(_cache(['/content/build/app.min.js']), function() {
+			app.Load(_cache([
+				'/content/build/app.min.js'
+			]), function() {
 				app.Config(['$routeProvider', function($routeProvider) {
 					$routeProvider.
 						when('/home', {
