@@ -76,6 +76,7 @@ obj.prototype = $.extends('!module', {
         return (this.mongo.remove({_id: this.objectId(id), struct: this._struct.struct}));
 	},
 	update: function(id, data) {
+		delete data._id;
         return (this.mongo.update({_id: this.objectId(id), struct: this._struct.struct}, data));
 	},
 	add: function(data) {

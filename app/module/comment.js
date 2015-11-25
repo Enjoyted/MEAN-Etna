@@ -2,7 +2,7 @@
 
 var obj = function(app) {
 	var self = this;
-	this._path = '/rest/comment/:articleID/';
+	this._path = '/rest/comment/:articleID';
 	
 	app.get(this._path + '/', this.isLoggedIn, function(req, res) {
 		self.setParent(req.params.articleID);
@@ -82,6 +82,7 @@ obj.prototype = $.extends('!module', {
         return (this.mongo.remove({parent: this._parentID, _id: this.objectId(id), struct: this._struct.struct}));
 	},
 	update: function(id, data) {
+		delete data._id;
         return (this.mongo.update({parent: this._parentID, _id: this.objectId(id), struct: this._struct.struct}, data));
 	},
 	add: function(data) {
