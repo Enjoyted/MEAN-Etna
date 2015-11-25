@@ -2,12 +2,35 @@
 
 var express = $.module('/engine/node_modules/express'), bodyParser = $.module('/engine/node_modules/body-parser');
 
+var session = $.module('/engine/node_modules/express-session');
+var cookieParser = $.module('/engine/node_modules/cookie-parser');
+
 var obj = function(callback) {
 	this._config = $.config.get('http');
 	this.app = express();
 	this.app.use(express.static(appRoot + '/public'));
 	this.app.use(bodyParser.urlencoded({ extended: false }));
     this.app.use(bodyParser.json());
+	this.app.use(function(req, res, next) {
+        res.header('Access-Control-Allow-Credentials', true);
+        res.header('Access-Control-Allow-Origin', req.headers.origin);
+        res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+        res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
+        if ('OPTIONS' == req.method) {
+            res.send(200);
+        } else {
+            next();
+        }
+    });
+	this.app.use(cookieParser());
+
+    this.app.use(session({
+        name: 'horseSHIT',
+		secret: 'horse',
+		resave: true,
+		saveUninitialized: true,
+        cookie: { httpOnly: true, maxAge: 2419200000 }
+    }));
 	
     this.server(callback);
 };

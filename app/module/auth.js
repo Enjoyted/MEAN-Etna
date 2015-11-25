@@ -36,7 +36,7 @@ var obj = function(app) {
 	app.post('/register', function(req, res) {
         self.register(req.body).then(function(out) {
             passport.authenticate('local')(req, res, function() {
-				res.redirect('/loginSuccess');
+				return res.json({error: false, response: self._cleanUser(out)});
 			});
         }, function(out) {
             res.status(400).json(out);
@@ -45,17 +45,6 @@ var obj = function(app) {
 	app.post('/logout', function(req, res) {
 		req.logout();
 		res.json({response: 'logged out'});
-	});
-	
-	app.get('/loginFailure', function(req, res, next) {
-		res.json({error: true, response: 'Failed to authenticate'});
-	});
-
-	app.get('/loginSuccess', function(req, res, next) {
-		/*req.login({}, function(err) {
-			if (err) { return next(err); }
-			return (res.json({error: false, response: 'Successfully authenticated'}));
-		});*/
 	});
 	
 	passport.serializeUser(function(user, done) {
