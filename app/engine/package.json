@@ -8,6 +8,7 @@
 		"express": "~4.0.0",
 		"passport": "latest",
         "passport-facebook": "latest",
+        "passport-local": "latest",
 		"body-parser": "latest"
 	}
 }

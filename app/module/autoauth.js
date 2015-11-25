@@ -2,7 +2,7 @@
  * Created by teddy on 06/11/15.
  */
 "use strict";
-
+/*
 var passport = $.module('/engine/node_modules/passport');
 
 var FACEBOOK_APP_ID = "1666649750283501";
@@ -89,5 +89,11 @@ obj.prototype = $.extends('!module', {
     add: function(data) {
         return (this.mongo.insert(this._merge(data)));
     }
-});
+});*/
+var obj = function() {
+	
+};
+obj.prototype = {
+	
+}
 module.exports = obj;

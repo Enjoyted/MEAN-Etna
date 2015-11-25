@@ -1,33 +1,60 @@
 "use strict";
 
+var passport = $.module('/engine/node_modules/passport');
+var LocalStrategy = $.module('/engine/node_modules/passport-local').Strategy;
+
 var obj = function(app) {
 	var self = this;
+	
+	app.use(passport.initialize());
+	app.use(passport.session());
+	
+	passport.use(new LocalStrategy(function(username, password, done) {
+		process.nextTick(function() {
+			console.log(username, password);
+			self.login({login: username, password: password}).then(function(res) {
+				done(null, res);
+			}, function() {
+				done(null, false);
+			});
+		});
+	}));
 
-    app.post('/login/', function(req, res) {
-        self.login(req.body).then(function (out) {
-            var sKey = this.randomKey(124);
-            self._session[sKey] = {};
-
-            res.cookie('session', sKey, { maxAge: 900000, httpOnly: true });
-            res.json({
-                sessionKey: sKey
-            });
-        }, function (out) {
-            res.status(400).json(out);
-        });
-	});
-    app.post('/register/', function(req, res) {
+	app.post('/login',
+		passport.authenticate('local', {
+			successRedirect: '/loginSuccess',
+			failureRedirect: '/loginFailure'
+		})
+	);
+	app.post('/register', function(req, res) {
         self.register(req.body).then(function(out) {
-            var sKey = this.randomKey(124);
-            self._session[sKey] = true;
-
-            res.json({
-                sessionKey: sKey
-            });
+            passport.authenticate('local')(req, res, function() {
+				res.redirect('/loginSuccess');
+			});
         }, function(out) {
             res.status(400).json(out);
         });
     });
+	app.post('/logout', function(req, res) {
+		req.logout();
+		res.json({response: 'logged out'});
+	});
+	
+	app.get('/loginFailure', function(req, res, next) {
+		res.json({error: true, response: 'Failed to authenticate'});
+	});
+
+	app.get('/loginSuccess', function(req, res, next) {
+		res.json({error: false, response: 'Successfully authenticated'});
+	});
+	
+	passport.serializeUser(function(user, done) {
+		done(null, user);
+	});
+
+	passport.deserializeUser(function(user, done) {
+		done(null, user);
+	});
 };
 obj.prototype = $.extends('!module', {
 	_struct: {
@@ -48,12 +75,13 @@ obj.prototype = $.extends('!module', {
     },
 
 	login: function(data) {
-		var p = new $.promise();
+		var p = new $.promise(), self = this;
 		
 		this.mongo.find({login: data.login, struct: this._struct.struct}, {limit: 1}).then(function(res) {
 			if (res.length > 0) {
-                res = res[0];
-                if (res.password === this.hash(data.password, res.salt)) {
+				res = res[0];
+				console.log(res, self.hash(data.password, res.salt), (res.password == self.hash(data.password, res.salt)));
+                if (res.password == self.hash(data.password, res.salt)) {
                     p.resolve(res);
                 } else {
                     p.reject({error: 'no user or bad password'});
@@ -68,9 +96,10 @@ obj.prototype = $.extends('!module', {
     register: function(data) {
         var p = new $.promise(), self = this;
 
-        this.mongo.find({login: data.login || '', struct: this._struct.struct}, {limit: 1}).then(function(res) {
-            if (res.length > 0 || !$.defined(data.login) || !$.defined(data.password)) {
-                return (new $.promise()).reject('user already has that name');
+        this.mongo.find({login: data.username || '', struct: this._struct.struct}, {limit: 1}).then(function(res) {
+			console.log(data, res);
+            if (res.length > 0 || !$.defined(data.username) || !$.defined(data.password)) {
+                return (new $.promise()).reject({error: true, message: 'user already has that name'});
             }
             return (self.mongo.insert(self._merge(data)));
         }).then(function(res) {
