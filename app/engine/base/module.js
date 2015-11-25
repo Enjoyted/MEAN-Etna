@@ -2,14 +2,28 @@
 
 var obj = function() {}
 obj.prototype = $.extends('!base', {
-    objectId: function(id) {
+	mongo: $.obm.get('orm'),
+	not: function(source, object) {
+		if (Array.isArray(object)) {
+			for (var i in object) {
+				if (source == object[i]) {
+					return (false);
+				}
+			}
+			return (true);
+		} else {
+			return (source == object);
+		}
+	},
+	objectId: function(id) {
         return (this.mongo.ObjectId(id));
     },	
 	isLoggedIn: function(req, res, next) {
+		console.log('auth', req.isAuthenticated());
 		if (req.isAuthenticated()) {
 			return (next());
 		}
-		res.redirect('/');
+		res.status(401).json({error: true, message: 'not logged in'});
 	}
 });
 

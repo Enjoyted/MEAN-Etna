@@ -11,7 +11,6 @@ var obj = function(app) {
 	
 	passport.use(new LocalStrategy(function(username, password, done) {
 		process.nextTick(function() {
-			console.log(username, password);
 			self.login({login: username, password: password}).then(function(res) {
 				done(null, res);
 			}, function() {
@@ -20,12 +19,20 @@ var obj = function(app) {
 		});
 	}));
 
-	app.post('/login',
-		passport.authenticate('local', {
-			successRedirect: '/loginSuccess',
-			failureRedirect: '/loginFailure'
-		})
-	);
+	app.post('/login', function(req, res, next) {
+		passport.authenticate('local', function(err, user, info) {
+			if (err) {
+				return next(err); 
+			}
+			if (!user) { return
+				res.json({error: true, response: 'Failed to authenticate'}); 
+			}
+			req.logIn(user, function(err) {
+				if (err) { return next(err); }
+				return res.json({error: false, response: self._cleanUser(user)});
+			});
+		})(req, res, next);
+	});
 	app.post('/register', function(req, res) {
         self.register(req.body).then(function(out) {
             passport.authenticate('local')(req, res, function() {
@@ -45,7 +52,10 @@ var obj = function(app) {
 	});
 
 	app.get('/loginSuccess', function(req, res, next) {
-		res.json({error: false, response: 'Successfully authenticated'});
+		/*req.login({}, function(err) {
+			if (err) { return next(err); }
+			return (res.json({error: false, response: 'Successfully authenticated'}));
+		});*/
 	});
 	
 	passport.serializeUser(function(user, done) {
@@ -73,6 +83,15 @@ obj.prototype = $.extends('!module', {
         copy.password = this.hash(data.password, copy.salt);
         return (copy);
     },
+	_cleanUser: function(user) {
+		var out = {};
+		for (var i in user) {
+			if (this.not(i, ['salt', 'password'])) {
+				out[i] = user[i];
+			}
+		}
+		return (out);
+	},
 
 	login: function(data) {
 		var p = new $.promise(), self = this;
@@ -80,8 +99,7 @@ obj.prototype = $.extends('!module', {
 		this.mongo.find({login: data.login, struct: this._struct.struct}, {limit: 1}).then(function(res) {
 			if (res.length > 0) {
 				res = res[0];
-				console.log(res, self.hash(data.password, res.salt), (res.password == self.hash(data.password, res.salt)));
-                if (res.password == self.hash(data.password, res.salt)) {
+				if (res.password == self.hash(data.password, res.salt)) {
                     p.resolve(res);
                 } else {
                     p.reject({error: 'no user or bad password'});
@@ -97,8 +115,7 @@ obj.prototype = $.extends('!module', {
         var p = new $.promise(), self = this;
 
         this.mongo.find({login: data.username || '', struct: this._struct.struct}, {limit: 1}).then(function(res) {
-			console.log(data, res);
-            if (res.length > 0 || !$.defined(data.username) || !$.defined(data.password)) {
+			if (res.length > 0 || !$.defined(data.username) || !$.defined(data.password)) {
                 return (new $.promise()).reject({error: true, message: 'user already has that name'});
             }
             return (self.mongo.insert(self._merge(data)));

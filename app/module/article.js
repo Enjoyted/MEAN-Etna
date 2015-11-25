@@ -4,7 +4,7 @@ var obj = function(app) {
 	var self = this;
 	this._path = '/rest/article';
 	
-	app.get(this._path + '/', this.isLoggedIn(), function(req, res) {
+	app.get(this._path + '/', this.isLoggedIn, function(req, res) {
 		self.getAll().then(function(out) {
             res.json(out);
         }, function(out) {
@@ -12,7 +12,7 @@ var obj = function(app) {
         });
 	});
 	
-	app.get(this._path + '/:id', this.isLoggedIn(), function(req, res) {
+	app.get(this._path + '/:id', this.isLoggedIn, function(req, res) {
 		self.getByID(req.params.id).then(function(out) {
             res.json(out);
         }, function(out) {
@@ -20,7 +20,7 @@ var obj = function(app) {
         });
 	});
 	
-	app.delete(this._path + '/:id', this.isLoggedIn(), function(req, res) {
+	app.delete(this._path + '/:id', this.isLoggedIn, function(req, res) {
 		self.removeById(req.params.id).then(function(out) {
             res.json(out);
         }, function(out) {
@@ -28,7 +28,7 @@ var obj = function(app) {
         });
 	});
 	
-	app.put(this._path + '/:id', this.isLoggedIn(), function(req, res) {
+	app.put(this._path + '/:id', this.isLoggedIn, function(req, res) {
 		self.update(req.params.id, req.body).then(function(out) {
             res.json(out);
         }, function(out) {
@@ -36,7 +36,7 @@ var obj = function(app) {
         });
 	});
 	
-	app.post(this._path + '/', this.isLoggedIn(), function(req, res) {
+	app.post(this._path + '/', this.isLoggedIn, function(req, res) {
 		self.add(req.body).then(function(out) {
 			res.json(out);
 		}, function(out) {
