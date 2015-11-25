@@ -9,6 +9,7 @@
 		"express-session": "latest",
 		"connect-mongo": "latest",
 		"cookie-parser": "latest",
+		"cookie-session": "latest",
 		"passport": "latest",
         "passport-facebook": "latest",
         "passport-local": "latest",

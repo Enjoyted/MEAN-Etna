@@ -3,7 +3,9 @@
 var express = $.module('/engine/node_modules/express'), bodyParser = $.module('/engine/node_modules/body-parser');
 
 var session = $.module('/engine/node_modules/express-session');
+var cookieSession = $.module('/engine/node_modules/cookie-session');
 var cookieParser = $.module('/engine/node_modules/cookie-parser');
+var passport = $.module('/engine/node_modules/passport');
 
 var obj = function(callback) {
 	this._config = $.config.get('http');
@@ -24,13 +26,22 @@ var obj = function(callback) {
     });
 	this.app.use(cookieParser());
 
-    this.app.use(session({
+    /*this.app.use(session({
         name: 'horseSHIT',
 		secret: 'horse',
 		resave: true,
 		saveUninitialized: true,
-        cookie: { httpOnly: true, maxAge: 2419200000 }
-    }));
+        cookie: {
+			httpOnly: true,
+			maxAge: 2419200000
+		}
+    }));*/
+	this.app.use(cookieSession({
+		keys: ['key1', 'key2']
+	}));
+		
+	this.app.use(passport.initialize());
+	this.app.use(passport.session());
 	
     this.server(callback);
 };

@@ -5,10 +5,7 @@ var LocalStrategy = $.module('/engine/node_modules/passport-local').Strategy;
 
 var obj = function(app) {
 	var self = this;
-	
-	app.use(passport.initialize());
-	app.use(passport.session());
-	
+
 	passport.use(new LocalStrategy(function(username, password, done) {
 		process.nextTick(function() {
 			self.login({login: username, password: password}).then(function(res) {
@@ -34,9 +31,11 @@ var obj = function(app) {
 		})(req, res, next);
 	});
 	app.post('/register', function(req, res) {
-        self.register(req.body).then(function(out) {
-            passport.authenticate('local')(req, res, function() {
-				return res.json({error: false, response: self._cleanUser(out)});
+        self.register(req.body).then(function(user) {
+			user = user.inserted[0];
+            req.logIn(user, function(err) {
+				if (err) { return next(err); }
+				return res.json({error: false, response: self._cleanUser(user)});
 			});
         }, function(out) {
             res.status(400).json(out);
@@ -107,7 +106,7 @@ obj.prototype = $.extends('!module', {
 			if (res.length > 0 || !$.defined(data.username) || !$.defined(data.password)) {
                 return (new $.promise()).reject({error: true, message: 'user already has that name'});
             }
-            return (self.mongo.insert(self._merge(data)));
+            return (self.mongo.insert(self._merge({login: data.username || '', password: data.password})));
         }).then(function(res) {
             p.resolve(res);
         }, function(res) {
