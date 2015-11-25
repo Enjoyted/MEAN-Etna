@@ -82,9 +82,10 @@
 					<input type="text" id="password" class="form-control" required="true" ng-model="data.password">
 				</div>
 				<div class="text-center">
-					<a class="btn btn-default" ng-click="connect('register')">Inscription</a> - <a class="btn btn-default" ng-click="connect('login')">Connexion</a>
+					<a class="btn btn-default" ng-click="connect('register')">Inscription</a> - <a class="btn btn-default" ng-click="connect('login')">Connexion</a> - <a class="btn btn-default" ng-click="logout()">Déconnexion</a>
 				</div>
 			</form>
+            <div>{{data.error}}</div>
 		</div>
 	</div>
 </div>

@@ -14,9 +14,8 @@ Core.add(function(base) {
 
 			$scope.submit = function() {
 				if ($scope.comment.pseudo != '' && $scope.comment.message != '') {
-					var data = $scope.comment;
-					data.id_article = $routeParams.id;
-					base.connection($http, 'post', '/rest/comment/' + $routeParams.id, data).then(function(response) {
+					$scope.comment.date = new Date().getTime();
+					base.connection($http, 'post', '/rest/comment/' + $routeParams.id, $scope.comment).then(function(response) {
 						if (response.data.result.ok == 1) {
 							document.location.reload(true);
 						}
@@ -24,14 +23,17 @@ Core.add(function(base) {
 				}
 			};
 
-			base.connection($http, 'get', '/rest/article/' + $routeParams.id).then(function(response) {
-				$scope.data = response.data;
-				$scope.data.article = response.data[0];
-				base.connection($http, 'get', '/rest/comment/' + $routeParams.id).then(function(response) {
-					$scope.data.article.comments = response.data;
-					$scope.format();
+			$scope.getData = function() {
+				base.connection($http, 'get', '/rest/article/' + $routeParams.id).then(function(response) {
+					$scope.data = response.data;
+					$scope.data.article = response.data[0];
+					base.connection($http, 'get', '/rest/comment/' + $routeParams.id).then(function(response) {
+						$scope.data.article.comments = response.data;
+						$scope.format();
+					});
 				});
-			});
+			};
+			$scope.getData();
 
 			$scope.format = function() {
 				var note = 0;

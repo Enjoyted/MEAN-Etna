@@ -49,8 +49,8 @@ var Core;
 				app.Config(['$routeProvider', function($routeProvider) {
 					$routeProvider.
 						when('/home', {
-							templateUrl: partials + 'home.html',
-							controller: 'controller.Home'
+							templateUrl: partials + 'view/login.html',
+							controller: 'controller.Login'
 						}).
 						when('/articles', {
 							templateUrl: partials + 'view/articles.html',

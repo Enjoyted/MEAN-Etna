@@ -9,19 +9,33 @@ Core.add(function(base) {
 
             $scope.data = {
                 username: '',
-                password: ''
+                password: '',
+                error: ''
             };
 
             $scope.connect = function(type) {
                 if ($scope.username != '' && $scope.password != '') {
                     base.connection($http, 'post', '/' + type, $scope.data).then(function(response) {
-                        if (response.error == false) {
-                            // response.response;
+                        if (response.data.error == false) {
                             document.location.assign('#/articles');
+                        } else {
+                            $scope.data.error = response.data.message || response.data.response;
+                        }
+                    }, function(response) {
+                        if (response.data.error == false) {
+                            document.location.assign('#/articles');
+                        } else {
+                            $scope.data.error = response.data.message || response.data.response;
                         }
                     });
                 }
             }
+
+            $scope.logout = function(argument) {
+                base.connection($http, 'post', '/logout').then(function(response) {
+                    document.location.reload(true);
+                });
+            };
 
             $timeout(function() {
                 $('.jinxloadPage').css('opacity', '1');

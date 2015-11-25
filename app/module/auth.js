@@ -19,14 +19,14 @@ var obj = function(app) {
 	app.post('/login', function(req, res, next) {
 		passport.authenticate('local', function(err, user, info) {
 			if (err) {
-				return next(err); 
+				return res.json({error: true, message: 'Failed to authenticate'});  
 			}
-			if (!user) { return
-				res.json({error: true, response: 'Failed to authenticate'}); 
+			if (!user) {
+				return res.json({error: true, message: 'Failed to authenticate'}); 
 			}
 			req.logIn(user, function(err) {
-				if (err) { return next(err); }
-				return res.json({error: false, response: self._cleanUser(user)});
+				if (err) { return res.json({error: true, message: 'Failed to authenticate'});  }
+				return res.json({error: false, message: self._cleanUser(user)});
 			});
 		})(req, res, next);
 	});
@@ -35,7 +35,7 @@ var obj = function(app) {
 			user = user.inserted[0];
             req.logIn(user, function(err) {
 				if (err) { return next(err); }
-				return res.json({error: false, response: self._cleanUser(user)});
+				return res.json({error: false, message: self._cleanUser(user)});
 			});
         }, function(out) {
             res.status(400).json(out);
@@ -43,7 +43,7 @@ var obj = function(app) {
     });
 	app.post('/logout', function(req, res) {
 		req.logout();
-		res.json({response: 'logged out'});
+		res.json({message: 'logged out'});
 	});
 	
 	passport.serializeUser(function(user, done) {

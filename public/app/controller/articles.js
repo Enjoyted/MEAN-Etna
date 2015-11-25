@@ -25,6 +25,7 @@ Core.add(function(base) {
 					$scope.article.tags != '' && 
 					$scope.article.pseudo != '' && 
 					$scope.article.email != '') {
+					$scope.article.date = new Date().getTime();
 					base.connection($http, 'post', '/rest/article/', $scope.article).then(function(response) {
 						if (response.data.result.ok == 1) {
 							document.location.assign('#/article/' + response.data.inserted[0]._id);
@@ -33,10 +34,13 @@ Core.add(function(base) {
 				}
 			};
 
-			base.connection($http, 'get', '/rest/article/').then(function(response) {
-				$scope.data = response.data;
-				$scope.format();
-			});
+			$scope.getData = function() {
+				base.connection($http, 'get', '/rest/article/').then(function(response) {
+					$scope.data = response.data;
+					$scope.format();
+				});
+			};
+			$scope.getData();
 
 			$scope.format = function() {
 				for (var i in $scope.data) {
