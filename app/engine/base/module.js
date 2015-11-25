@@ -25,9 +25,10 @@ obj.prototype = $.extends('!base', {
 			property = this._passport.instance._userProperty || 'user';
 		}
 		console.log(property, req[property]);
-		if (req.isAuthenticated()) {
+		/*if (req.isAuthenticated()) {
 			return (next());
-		}
+		}*/
+		return next();
 		res.status(401).json({error: true, message: 'not logged in'});
 	}
 });

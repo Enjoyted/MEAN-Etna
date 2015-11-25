@@ -23,7 +23,6 @@ Core.add(function(base) {
 					$scope.article.introduction != '' && 
 					$scope.article.description != '' && 
 					$scope.article.tags != '' && 
-					$scope.article.image != '' && 
 					$scope.article.pseudo != '' && 
 					$scope.article.email != '') {
 					base.connection($http, 'post', '/rest/article/', $scope.article).then(function(response) {

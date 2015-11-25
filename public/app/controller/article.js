@@ -6,17 +6,17 @@ Core.add(function(base) {
 		
 			$scope.data = {};	
 			$scope.display = false;
-			$scope.commentaire = {
+			$scope.comment = {
 				pseudo: '',
 				message: '',
 				note: '3'
 			};
 
 			$scope.submit = function() {
-				if ($scope.commentaire.pseudo != '' && $scope.commentaire.message != '') {
-					var data = $scope.commentaire;
+				if ($scope.comment.pseudo != '' && $scope.comment.message != '') {
+					var data = $scope.comment;
 					data.id_article = $routeParams.id;
-					base.connection($http, 'post', '/rest/comment/', data).then(function(response) {
+					base.connection($http, 'post', '/rest/comment/' + $routeParams.id, data).then(function(response) {
 						if (response.data.result.ok == 1) {
 							document.location.reload(true);
 						}
@@ -27,20 +27,23 @@ Core.add(function(base) {
 			base.connection($http, 'get', '/rest/article/' + $routeParams.id).then(function(response) {
 				$scope.data = response.data;
 				$scope.data.article = response.data[0];
-				$scope.format();
+				base.connection($http, 'get', '/rest/comment/' + $routeParams.id).then(function(response) {
+					$scope.data.article.comments = response.data;
+					$scope.format();
+				});
 			});
 
 			$scope.format = function() {
 				var note = 0;
 				$scope.data.article.popularity = 0;
 				$scope.data.article.date = $filter('date')(new Date($scope.data.article.date), 'EEEE, d MMMM y - HH:mm');
-				for (var i in $scope.data.article.commentaires) {
-					note += $scope.data.article.commentaires[i].note;
+				for (var i in $scope.data.article.comments) {
+					note += $scope.data.article.comments[i].note;
 					$scope.data.article.popularity++;
-					$scope.data.article.commentaires[i].date = $filter('date')(new Date($scope.data.article.commentaires[i].date), 'EEEE, d MMMM y - HH:mm');
+					$scope.data.article.comments[i].date = $filter('date')(new Date($scope.data.article.comments[i].date), 'EEEE, d MMMM y - HH:mm');
 				}
 				if ($scope.data.article.popularity > 0) {
-					$scope.data.article.note = note / $scope.data.article.commentaires.length;
+					$scope.data.article.note = note / $scope.data.article.comments.length;
 				} else {
 					$scope.data.article.note = '-';
 				}

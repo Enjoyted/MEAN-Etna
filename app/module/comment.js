@@ -2,9 +2,9 @@
 
 var obj = function(app) {
 	var self = this;
-	this._path = '/rest/comment/:articleID/';
+	this._path = '/rest/comment/:articleID';
 	
-	app.get(this._path + '/', this.isLoggedIn, function(req, res) {
+	app.get(this._path, this.isLoggedIn, function(req, res) {
 		self.setParent(req.params.articleID);
 		self.getAll().then(function(out) {
             res.json(out);
@@ -40,7 +40,7 @@ var obj = function(app) {
         });
 	});
 	
-	app.post(this._path + '/', this.isLoggedIn, function(req, res) {
+	app.post(this._path, this.isLoggedIn, function(req, res) {
 		self.setParent(req.params.articleID);
 		self.add(req.body).then(function(out) {
 			res.json(out);

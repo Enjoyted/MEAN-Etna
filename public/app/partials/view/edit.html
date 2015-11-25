@@ -12,7 +12,7 @@
 			</h3>
 		</div>
 		<div class="panel-body">
-			<div class="thumbnail">
+			<div class="thumbnail" ng-show="data.article.image != ''">
 				<img ng-src="{{data.article.image}}">
 			</div>
 			<div class="form-group">
@@ -45,24 +45,24 @@
 			<h3 class="panel-title">Afficher les commentaires</h3>
 		</div>
 		<div ng-show="display" class="panel-body">
-			<div ng-repeat="commentaire in data.article.commentaires" ng-show="commentaire.status == 1" class="panel panel-default">
+			<div ng-repeat="comment in data.article.comments" ng-show="comment.status == 1" class="panel panel-default">
 				<div class="panel-heading">
-					<span class="badge pull-right">{{commentaire.note}} / 5</span>
+					<span class="badge pull-right">{{comment.note}} / 5</span>
 					<h3 class="panel-title">
 						<div class="form-group">
 							<label for="pseudo">Pseudo:</label>
-							<input type="text" class="form-control" required="true" ng-model="commentaire.pseudo">
+							<input type="text" class="form-control" required="true" ng-model="comment.pseudo">
 						</div>
 					</h3>
 				</div>
 				<div class="panel-body">
 					<div class="form-group">
 						<label for="message">Message:</label>
-						<textarea id="message" class="form-control" required="true" ng-model="commentaire.message"></textarea>
+						<textarea id="message" class="form-control" required="true" ng-model="comment.message"></textarea>
 					</div>
 				</div>
 				<div class="panel-footer">
-					<span class="badge pull-right">{{commentaire.date}}</span>
+					<span class="badge pull-right">{{comment.date}}</span>
 				</div>
 			</div>
 		</div>

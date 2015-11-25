@@ -8,7 +8,7 @@
 			<h3 class="panel-title">{{data.article.nom}}</h3>
 		</div>
 		<div class="panel-body">
-			<div class="thumbnail">
+			<div class="thumbnail" ng-show="data.article.image != ''">
 				<img ng-src="{{data.article.image}}">
 			</div>
 			<p>{{data.article.description}}</p>
@@ -26,20 +26,20 @@
 			<form role="form">
 				<div class="form-group">
 					<label for="pseudo">Pseudo:</label>
-					<input type="text" id="pseudo" class="form-control" required="true" ng-model="commentaire.pseudo">
+					<input type="text" id="pseudo" class="form-control" required="true" ng-model="comment.pseudo">
 				</div>
 				<div class="form-group">
 					<label for="message">Message:</label>
-					<textarea id="message" class="form-control" required="true" ng-model="commentaire.message"></textarea>
+					<textarea id="message" class="form-control" required="true" ng-model="comment.message"></textarea>
 				</div>
 				<div class="form-group">
 					<label for="note">Note:</label>
 					<div id="note" class="form-control">
-						1 <input type="radio" value="1" ng-model="commentaire.note">
-						2 <input type="radio" value="2" ng-model="commentaire.note">
-						3 <input type="radio" value="3" ng-model="commentaire.note">
-						4 <input type="radio" value="4" ng-model="commentaire.note">
-						5 <input type="radio" value="5" ng-model="commentaire.note">
+						1 <input type="radio" value="1" ng-model="comment.note">
+						2 <input type="radio" value="2" ng-model="comment.note">
+						3 <input type="radio" value="3" ng-model="comment.note">
+						4 <input type="radio" value="4" ng-model="comment.note">
+						5 <input type="radio" value="5" ng-model="comment.note">
 					</div>
 				</div>
 				<div class="text-center">
@@ -48,16 +48,16 @@
 			</form>
 		</div>
 	</div>
-	<div ng-repeat="commentaire in data.article.commentaires" ng-show="commentaire.status == 1" class="panel panel-default">
+	<div ng-repeat="comment in data.article.comments" ng-show="comment.status == 1" class="panel panel-default">
 		<div class="panel-heading">
-			<span class="badge pull-right">{{commentaire.note}} / 5</span>
-			<h3 class="panel-title">{{commentaire.pseudo}}</h3>
+			<span class="badge pull-right">{{comment.note}} / 5</span>
+			<h3 class="panel-title">{{comment.pseudo}}</h3>
 		</div>
 		<div class="panel-body">
-			<div>{{commentaire.message}}</div>
+			<div>{{comment.message}}</div>
 		</div>
 		<div class="panel-footer">
-			<span class="badge pull-right">{{commentaire.date}}</span>
+			<span class="badge pull-right">{{comment.date}}</span>
 		</div>
 	</div>
 <div>
